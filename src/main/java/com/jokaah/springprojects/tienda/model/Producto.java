@@ -1,14 +1,11 @@
 package com.jokaah.springprojects.tienda.model;
 
-import java.util.Date;
-
 public class Producto {
 
     private int codigo;
     private String nombre;
     private String descripcion;
-    private String urlImg;
-    private Date fecha;
+    private float precio;
 
     public Producto() {
     }
@@ -17,12 +14,33 @@ public class Producto {
         this.codigo = codigo;
     }
 
-    public Producto(int codigo, String nombre, String descripcion, String urlImg, Date fecha) {
+    public Producto(int codigo, String nombre, String descripcion, float precio) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.urlImg = urlImg;
-        this.fecha = fecha;
+        this.precio = precio;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + codigo;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Producto other = (Producto) obj;
+        if (codigo != other.codigo)
+            return false;
+        return true;
     }
 
     public int getCodigo() {
@@ -49,42 +67,12 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public String getUrlImg() {
-        return urlImg;
+    public float getPrecio() {
+        return precio;
     }
 
-    public void setUrlImg(String urlImg) {
-        this.urlImg = urlImg;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + codigo;
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Producto other = (Producto) obj;
-        if (codigo != other.codigo)
-            return false;
-        return true;
+    public void setPrecio(float precio) {
+        this.precio = precio;
     }
 
 }

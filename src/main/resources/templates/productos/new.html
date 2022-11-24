@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlsn:th="http://www.thymeleaf.org">
+
+<head th:replace="commons/header :: header " />
+
+<body>
+
+    <div th:replace="commons/menu :: menu" />
+
+    <div class="container">
+        <form class="needs-validation" style="width: 30%;" th:action="@{/productos/save}" method="post">
+            <input type="hidden" id="codigo" name="codigo" th:value="${producto.codigo}">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="nombre" id="nombre" th:value="${producto.nombre}">
+            </div>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <input type="text" class="form-control" name="descripcion" id="descripcion" th:value="${producto.descripcion}">
+            </div>
+            <div class="mb-3">
+                <label for="precio" class="form-label">Precio</label>
+                <input type="text" class="form-control" name="precio" id="precio" th:value="${producto.precio}">
+            </div>
+            <div class="col-sm-12">
+                <div class="btn-group">
+                    <a class="btn btn-primary" th:href="@{/productos/list}" href="#" role="button">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">Crear</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div th:replace="commons/footer :: footer" class="container" />
+
+
+</body>
+
+</html>

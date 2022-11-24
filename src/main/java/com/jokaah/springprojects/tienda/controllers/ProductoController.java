@@ -1,60 +1,87 @@
 package com.jokaah.springprojects.tienda.controllers;
 
 import com.jokaah.springprojects.tienda.model.Producto;
+import com.jokaah.springprojects.tienda.services.ProductosService;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/productos")
 public class ProductoController {
 
-    @RequestMapping(value = "/list")
-    public ModelAndView list() {
+    @Autowired
+    ProductosService productosService;
+
+    @GetMapping(value = "/list")
+    public ModelAndView list(Model model) {
+
+        List<Producto> productos = productosService.findAll();
 
         ModelAndView modelAndView = new ModelAndView("productos/list");
-        modelAndView.addObject("productos", getProductos());
-
+        modelAndView.addObject("productos", productos);
+        modelAndView.addObject("title", "productos");
         return modelAndView;
     }
 
-    @RequestMapping(path = "/edit")
+    @GetMapping(path = { "/edit/{codigo}" })
     public ModelAndView edit(
-            @RequestParam(name = "codigo", required = true) int codigo) {
-        ModelAndView modelAndView = new ModelAndView("productos/edit");
-        modelAndView.addObject("producto", getProducto(codigo));
+            @PathVariable(name = "codigo", required = true) int codigo) {
 
+        Producto producto = productosService.findById(codigo);
+
+        ModelAndView modelAndView = new ModelAndView("productos/edit");
+        modelAndView.addObject("producto", producto);
         return modelAndView;
     }
 
-
-    private Producto getProducto(int codigo) {
-        List<Producto> productos = getProductos();
-        int indexOf = productos.indexOf(new Producto(codigo));
-
-        return productos.get(indexOf);
+    @GetMapping(path = { "/create" })
+    public ModelAndView create(Producto producto) {
+        ModelAndView modelAndView = new ModelAndView("productos/new");
+        modelAndView.addObject("producto", new Producto());
+        return modelAndView;
     }
 
-    private List<Producto> getProductos() {
+    @PostMapping(path = { "/save" })
+    public ModelAndView save(Producto producto) {
 
-        Producto p1 = new Producto(1, "Coca Cola", "Descripcion Coca Cola", "/tienda/img/cocacola.jpg", new Date());
-        Producto p2 = new Producto(2, "Pepsi", "Descripcion Pepsi", "/tienda/img/pepsi.jpg", new Date());
-        Producto p3 = new Producto(3, "Fanta", "Descripcion Fanta", "/tienda/img/fanta.jpg", new Date());
-        Producto p4 = new Producto(4, "Sprite", "Descripcion Sprite", "/tienda/img/sprite.jpg", new Date());
+        productosService.insert(producto);
+        List<Producto> productos = productosService.findAll();
 
-        List<Producto> listaProductos = new ArrayList<Producto>();
-
-        listaProductos.add(p1);
-        listaProductos.add(p2);
-        listaProductos.add(p3);
-        listaProductos.add(p4);
-
-        return listaProductos;
+        ModelAndView modelAndView = new ModelAndView("productos/list");
+        modelAndView.addObject("productos", productos);
+        return modelAndView;
     }
+
+    @PostMapping(path = { "/update" })
+    public ModelAndView update(Producto producto) {
+
+        productosService.update(producto);
+        List<Producto> productos = productosService.findAll();
+
+        ModelAndView modelAndView = new ModelAndView("productos/list");
+        modelAndView.addObject("productos", productos);
+        return modelAndView;
+    }
+
+    @GetMapping(path = { "/delete/{codigo}" })
+    public ModelAndView delete(
+            @PathVariable(name = "codigo", required = true) int codigo) {
+
+        productosService.delete(codigo);
+        List<Producto> productos = productosService.findAll();
+
+        ModelAndView modelAndView = new ModelAndView("productos/list");
+        modelAndView.addObject("productos", productos);
+        return modelAndView;
+    }
+
 }

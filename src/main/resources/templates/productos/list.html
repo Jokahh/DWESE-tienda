@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlsn:th="http://www.thymeleaf.org">
+
+<head th:replace="commons/header :: header " />
+
+<body>
+    <div th:replace="commons/menu :: menu" />
+
+    <div class="container">
+        <div class="row">
+            <h3 th:text="#{producto.list.titulo}">Productos</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <a th:href="@{/productos/create}" class="btn btn-primary btn-sm mb-3" th:text="#{producto.list.nuevoProducto}">Nuevo producto</a>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" th:text="#{producto.list.codigo}">Código</th>
+                        <th scope="col" th:text="#{producto.list.nombre}">Nombre</th>
+                        <th scope="col" th:text="#{producto.list.descripcion}">Descripción</th>
+                        <th scope="col" th:text="#{producto.list.precio}">Precio</th>
+                        <th scope="col" colspan="2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="producto : ${productos}">
+                        <th scope="row" th:text="${producto.codigo}"></th>
+                        <td th:text="${producto.nombre}"></td>
+                        <td th:text="${producto.descripcion}"></td>
+                        <td th:text="${producto.precio}"></td>
+                        <td>
+                            <a href="#" th:href="@{/productos/edit/}+${producto.codigo}"><button type="button"
+                                    class="btn btn-primary" th:text="#{list.editar}">Editar</button>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" th:href="@{/productos/delete/}+${producto.codigo}"><button type="button"
+                                    class="btn btn-danger" th:text="#{list.borrar}">Borrar</button>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div th:replace="commons/footer :: footer" class="container" />
+
+
+
+</body>
+
+</html>
