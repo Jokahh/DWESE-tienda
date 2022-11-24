@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlsn:th="http://www.thymeleaf.org">
+
+<head th:replace="commons/header :: header " />
+
+<body>
+
+    <div th:replace="commons/menu :: menu" />
+
+    <div class="container">
+        <form class="needs-validation" style="width: 30%;" th:action="@{/clientes/save}" method="post">
+            <input type="hidden" id="codigo" name="codigo" th:value="${cliente.codigo}">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="nombre" id="nombre" th:value="${cliente.nombre}">
+            </div>
+            <div class="mb-3">
+                <label for="apellidos" class="form-label">Apellidos</label>
+                <input type="text" class="form-control" name="apellidos" id="apellidos" th:value="${cliente.apellidos}">
+            </div>
+            <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" name="telefono" id="telefono" th:value="${cliente.telefono}">
+            </div>
+            <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección</label>
+                <input type="text" class="form-control" name="direccion" id="direccion" th:value="${cliente.direccion}">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" id="email" th:value="${cliente.email}">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" name="vip" id="vip" th:checked="${cliente.vip}">
+                <label class="form-check-label" for="vip">Cliente VIP</label>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="btn-group">
+                    <a class="btn btn-primary" th:href="@{/clientes/list}" href="#" role="button">Cancelar</a>
+                    <button class="btn btn-primary" type="submit">Crear</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div th:replace="commons/footer :: footer" class="container" />
+
+
+</body>
+
+</html>

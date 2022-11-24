@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="commons/header :: header" />
+
+<body>
+    <div th:replace="commons/menu :: menu" />
+
+    <div class="container py-4">
+        <div class="row align-items-md-stretch">
+            <div class="col-md-12">
+                <div class="h-100 p-5 text-bg-dark rounded-3">
+                    <h1 th:text="${greetings}">Hola</h1>
+                    <h3 th:text="#{saludar.usuario(${session.usuario.usuario})}">Hello, Placeholder</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="commons/footer :: footer" class="container" />
+</body>
+
+</html>

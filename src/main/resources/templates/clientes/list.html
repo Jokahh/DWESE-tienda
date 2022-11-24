@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlsn:th="http://www.thymeleaf.org">
+
+<head th:replace="commons/header :: header " />
+
+<body>
+    <div th:replace="commons/menu :: menu" />
+
+    <div class="container">
+        <div class="row">
+            <h3 th:text="#{cliente.list.titulo}">Clientes</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <a th:href="@{/clientes/create}" class="btn btn-primary btn-sm mb-3" th:text="#{cliente.list.nuevoCliente}">Nuevo cliente</a>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" th:text="#{cliente.list.codigo}">Código</th>
+                        <th scope="col" th:text="#{cliente.list.nombre}">Nombre</th>
+                        <th scope="col" th:text="#{cliente.list.apellidos}">Apellidos</th>
+                        <th scope="col" th:text="#{cliente.list.telefono}">Telefono</th>
+                        <th scope="col" th:text="#{cliente.list.direccion}">Dirección</th>
+                        <th scope="col" th:text="#{cliente.list.email}">Email</th>
+                        <th scope="col" th:text="#{cliente.list.vip}">VIP</th>
+                        <th scope="col" colspan="2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cliente : ${clientes}">
+                        <th scope="row" th:text="${cliente.codigo}"></th>
+                        <td th:text="${cliente.nombre}"></td>
+                        <td th:text="${cliente.apellidos}"></td>
+                        <td th:text="${cliente.telefono}"></td>
+                        <td th:text="${cliente.direccion}"></td>
+                        <td th:text="${cliente.email}"></td>
+                        <td th:text="${cliente.vip} ? 'SI' : 'NO'"></td>
+
+                        <td>
+                            <a href="#" th:href="@{/clientes/edit/}+${cliente.codigo}"><button type="button"
+                                    class="btn btn-primary" th:text="#{list.editar}">Editar</button>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" th:href="@{/clientes/delete/}+${cliente.codigo}"><button type="button"
+                                    class="btn btn-danger" th:text="#{list.borrar}">Borrar</button>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div th:replace="commons/footer :: footer" class="container" />
+
+
+
+</body>
+
+</html>
