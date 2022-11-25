@@ -32,6 +32,7 @@
                         <td th:text="${producto.nombre}"></td>
                         <td th:text="${producto.descripcion}"></td>
                         <td th:text="${producto.precio}"></td>
+                        <td><img src="" alt=""></td>
                         <td>
                             <a href="#" th:href="@{/productos/edit/}+${producto.codigo}"><button type="button"
                                     class="btn btn-primary" th:text="#{list.editar}">Editar</button>

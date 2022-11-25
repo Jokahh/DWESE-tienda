@@ -6,6 +6,7 @@ public class Producto {
     private String nombre;
     private String descripcion;
     private float precio;
+    private byte[] imagen;
 
     public Producto() {
     }
@@ -14,11 +15,12 @@ public class Producto {
         this.codigo = codigo;
     }
 
-    public Producto(int codigo, String nombre, String descripcion, float precio) {
+    public Producto(int codigo, String nombre, String descripcion, float precio, byte[] imagen) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
+        this.imagen = imagen;
     }
 
     @Override
@@ -75,4 +77,11 @@ public class Producto {
         this.precio = precio;
     }
 
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
 }

@@ -29,15 +29,19 @@ public class LoginController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/signin")
+
+    //@PostMapping(value = "/signin")
+    @GetMapping(value = "/signin")
     public ModelAndView signin(Usuario usuario, HttpSession session) {
+
+        usuario = new Usuario();
+        usuario.setUsuario("Admin");
 
         String message = messageSource.getMessage("saludar.usuario", new String[] { usuario.getUsuario() },
                 LocaleContextHolder.getLocale());
 
         ModelAndView modelAndView = new ModelAndView("welcome");
         modelAndView.addObject("greetings", message);
-
         modelAndView.addObject("usuario", usuario);
 
         session.setAttribute("usuario", usuario);

@@ -3,6 +3,10 @@ package com.jokaah.springprojects.tienda.controllers;
 import com.jokaah.springprojects.tienda.model.Producto;
 import com.jokaah.springprojects.tienda.services.ProductosService;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +16,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/productos")
 public class ProductoController {
-
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
     @Autowired
     ProductosService productosService;
 
@@ -51,13 +57,23 @@ public class ProductoController {
     }
 
     @PostMapping(path = { "/save" })
-    public ModelAndView save(Producto producto) {
+    public ModelAndView save(Producto producto, @RequestParam("image") MultipartFile multipartFile) throws IOException {
+
+
+        byte[] image = multipartFile.getBytes();
+        producto.setImagen(image);
+
 
         productosService.insert(producto);
         List<Producto> productos = productosService.findAll();
 
+        
         ModelAndView modelAndView = new ModelAndView("productos/list");
         modelAndView.addObject("productos", productos);
+
+
+
+
         return modelAndView;
     }
 
