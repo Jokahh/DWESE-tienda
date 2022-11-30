@@ -5,16 +5,23 @@ import com.jokaah.springprojects.tienda.dao.mappers.ProductoMapper;
 import com.jokaah.springprojects.tienda.model.Producto;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import java.io.InputStream;
 import java.io.ByteArrayInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
@@ -33,14 +40,55 @@ public class ProductosDAOImpl extends JdbcDaoSupport implements ProductosDAO {
         setDataSource(dataSource);
     }
 
+    /*
+     * @Override
+     * public List<Producto> findAll() {
+     * 
+     * String query = "select * from Productos";
+     * 
+     * List<Producto> productos = getJdbcTemplate().query(query, new
+     * ProductoMapper());
+     * 
+     * return productos;
+     * }
+     */
     @Override
-    public List<Producto> findAll() {
+    public Page<Producto> findAll(Pageable page) {
 
-        String query = "select * from Productos";
+        String queryCount = "select count(1) from Productos";
+        Integer total = getJdbcTemplate().queryForObject(queryCount, Integer.class);
 
-        List<Producto> productos = getJdbcTemplate().query(query, new ProductoMapper());
+        Order order = !page.getSort().isEmpty() ? page.getSort().toList().get(0) : Order.by("codigo");
 
-        return productos;
+        String query = "SELECT * FROM Productos ORDER BY " + order.getProperty() + " "
+                + order.getDirection().name() + " LIMIT " + page.getPageSize() + " OFFSET " + page.getOffset();
+
+        final List<Producto> productos = getJdbcTemplate().query(query, new ProductoMapper());
+
+        /*
+         * final List<Producto> productos = getJdbcTemplate().query(query, new
+         * RowMapper<Producto>() {
+         * 
+         * @Override
+         * 
+         * @Nullable
+         * public Producto mapRow(ResultSet rs, int rowNum) throws SQLException {
+         * Producto producto = new Producto();
+         * producto.setCodigo(rs.getInt("codigo"));
+         * producto.setNombre(rs.getString("nombre"));
+         * producto.setDescripcion(rs.getString("descripcion"));
+         * producto.setPrecio(rs.getFloat("precio"));
+         * producto.setImagen(rs.getBytes("image"));
+         * 
+         * return producto;
+         * }
+         * 
+         * });
+         * 
+         */
+
+        return new PageImpl<Producto>(productos, page, total);
+
     }
 
     @Override
@@ -54,6 +102,7 @@ public class ProductosDAOImpl extends JdbcDaoSupport implements ProductosDAO {
 
         return producto;
     }
+
     /*
      * @Override
      * public void insert(Producto producto) {

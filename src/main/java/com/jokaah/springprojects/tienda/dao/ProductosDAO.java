@@ -1,9 +1,11 @@
 package com.jokaah.springprojects.tienda.dao;
 import com.jokaah.springprojects.tienda.model.Producto;
-import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ProductosDAO {
-    public List<Producto> findAll();
+    public Page<Producto> findAll(Pageable page);
 
     public Producto findById(int codigo);
 

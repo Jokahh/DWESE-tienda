@@ -3,6 +3,8 @@ package com.jokaah.springprojects.tienda.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jokaah.springprojects.tienda.dao.ProductosDAO;
@@ -16,8 +18,8 @@ public class ProductosServiceImpl implements ProductosService {
     ProductosDAO productosDAO;
 
     @Override
-    public List<Producto> findAll() {
-        return productosDAO.findAll();
+    public Page<Producto> findAll(Pageable page) {
+        return productosDAO.findAll(page);
     }
 
     @Override
