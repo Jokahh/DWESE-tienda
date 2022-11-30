@@ -16,13 +16,14 @@
             </div>
         </div>
         <div class="row">
-            <table class="table">
+            <table class="table align-middle text-center">
                 <thead>
                     <tr>
                         <th scope="col" th:text="#{producto.list.codigo}">Código</th>
                         <th scope="col" th:text="#{producto.list.nombre}">Nombre</th>
                         <th scope="col" th:text="#{producto.list.descripcion}">Descripción</th>
                         <th scope="col" th:text="#{producto.list.precio}">Precio</th>
+                        <th scope="col" th:text="#{producto.list.imagen}">Imagen</th>
                         <th scope="col" colspan="2"></th>
                     </tr>
                 </thead>
@@ -32,7 +33,7 @@
                         <td th:text="${producto.nombre}"></td>
                         <td th:text="${producto.descripcion}"></td>
                         <td th:text="${producto.precio}"></td>
-                        <td><img src="" alt=""></td>
+                        <td><img src="" alt="" width="325em" th:src="'data:image/png;base64,' + ${producto.imageView}"></td>
                         <td>
                             <a href="#" th:href="@{/productos/edit/}+${producto.codigo}"><button type="button"
                                     class="btn btn-primary" th:text="#{list.editar}">Editar</button>

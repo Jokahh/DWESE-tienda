@@ -8,7 +8,7 @@
     <div th:replace="commons/menu :: menu" />
 
     <div class="container">
-        <form class="needs-validation" style="width: 30%;" th:action="@{/productos/update}" method="post">
+        <form class="needs-validation" style="width: 30%;" th:action="@{/productos/update}" method="post" enctype="multipart/form-data">
             <input type="hidden" id="codigo" name="codigo" th:value="${producto.codigo}">
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
@@ -21,6 +21,10 @@
             <div class="mb-3">
                 <label for="precio" class="form-label">Precio</label>
                 <input type="text" class="form-control" id="precio" name="precio" th:value="${producto.precio}">
+            </div>
+            <img src="" alt="" width="325em" th:src="'data:image/png;base64,' + ${producto.imageView}">
+            <div class="form-group">
+                <input type="file" name="image" accept="image/*" class="form-control-file">
             </div>
             <div class="col-sm-12">
                 <div class="btn-group">

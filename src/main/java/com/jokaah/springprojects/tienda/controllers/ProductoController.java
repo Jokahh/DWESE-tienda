@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ public class ProductoController {
     public ModelAndView list(Model model) {
 
         List<Producto> productos = productosService.findAll();
-
+        
         ModelAndView modelAndView = new ModelAndView("productos/list");
         modelAndView.addObject("productos", productos);
         modelAndView.addObject("title", "productos");
@@ -59,32 +61,29 @@ public class ProductoController {
     @PostMapping(path = { "/save" })
     public ModelAndView save(Producto producto, @RequestParam("image") MultipartFile multipartFile) throws IOException {
 
-
         byte[] image = multipartFile.getBytes();
         producto.setImagen(image);
 
-
         productosService.insert(producto);
-        List<Producto> productos = productosService.findAll();
 
-        
-        ModelAndView modelAndView = new ModelAndView("productos/list");
-        modelAndView.addObject("productos", productos);
-
-
-
+        //List<Producto> productos = productosService.findAll();
+        ModelAndView modelAndView = new ModelAndView("redirect:edit/" + producto.getCodigo());
+        //modelAndView.addObject("productos", productos);
 
         return modelAndView;
     }
 
     @PostMapping(path = { "/update" })
-    public ModelAndView update(Producto producto) {
+    public ModelAndView update(Producto producto, @RequestParam("image") MultipartFile multipartFile) throws IOException {
 
+        byte[] image = multipartFile.getBytes();
+        producto.setImagen(image);
+        
         productosService.update(producto);
-        List<Producto> productos = productosService.findAll();
+        //List<Producto> productos = productosService.findAll();
 
-        ModelAndView modelAndView = new ModelAndView("productos/list");
-        modelAndView.addObject("productos", productos);
+        ModelAndView modelAndView = new ModelAndView("redirect:edit/" + producto.getCodigo());
+        //modelAndView.addObject("productos", productos);
         return modelAndView;
     }
 

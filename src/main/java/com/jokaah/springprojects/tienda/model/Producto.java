@@ -1,5 +1,7 @@
 package com.jokaah.springprojects.tienda.model;
 
+import com.jokaah.springprojects.tienda.utils.ImageUtil;
+
 public class Producto {
 
     private int codigo;
@@ -83,5 +85,10 @@ public class Producto {
 
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
+    }
+
+    
+    public String getImageView(){
+        return ImageUtil.getImgData(this.imagen);
     }
 }

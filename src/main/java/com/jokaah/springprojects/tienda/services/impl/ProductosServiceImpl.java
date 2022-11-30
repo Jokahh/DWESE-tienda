@@ -33,6 +33,10 @@ public class ProductosServiceImpl implements ProductosService {
     @Override
     public void update(Producto producto) {
         productosDAO.update(producto);
+
+        if(producto.getImagen() != null && producto.getImagen().length > 0) {
+            productosDAO.updateImage(producto);
+        }
     }
 
     @Override
