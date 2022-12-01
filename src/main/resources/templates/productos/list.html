@@ -12,7 +12,8 @@
         </div>
         <div class="row">
             <div class="col-lg-3">
-                <a th:href="@{/productos/create}" class="btn btn-primary btn-sm mb-3" th:text="#{producto.list.nuevoProducto}">Nuevo producto</a>
+                <a th:href="@{/productos/create}" class="btn btn-primary btn-sm mb-3"
+                    th:text="#{producto.list.nuevoProducto}">Nuevo producto</a>
             </div>
         </div>
         <div class="row">
@@ -33,7 +34,8 @@
                         <td th:text="${producto.nombre}"></td>
                         <td th:text="${producto.descripcion}"></td>
                         <td th:text="${producto.precio}"></td>
-                        <td><img src="" alt="" width="325em" th:src="'data:image/png;base64,' + ${producto.imageView}"></td>
+                        <td><img src="" alt="" width="325em" th:src="'data:image/png;base64,' + ${producto.imageView}">
+                        </td>
                         <td>
                             <a href="#" th:href="@{/productos/edit/}+${producto.codigo}"><button type="button"
                                     class="btn btn-primary" th:text="#{list.editar}">Editar</button>
@@ -48,10 +50,13 @@
                 </tbody>
             </table>
         </div>
-        <div class="row">
-            <div th:replace="commons/pagination :: pagination"></div>
-        </div>
+        <div th:replace="commons/pagination :: pagination" />
     </div>
+
+
+
+   
+
     <div th:replace="commons/footer :: footer" class="container" />
 
 

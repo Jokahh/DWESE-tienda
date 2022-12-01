@@ -130,10 +130,10 @@ public class ProductoController {
             @PathVariable(name = "codigo", required = true) int codigo) {
 
         productosService.delete(codigo);
-        //List<Producto> productos = productosService.findAll();
+        // List<Producto> productos = productosService.findAll();
 
         ModelAndView modelAndView = new ModelAndView("productos/list");
-        //modelAndView.addObject("productos", productos);
+        // modelAndView.addObject("productos", productos);
         return modelAndView;
     }
 
