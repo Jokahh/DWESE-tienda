@@ -1,6 +1,7 @@
 package com.jokaah.springprojects.tienda.dao;
-import com.jokaah.springprojects.tienda.model.Cliente;
 import java.util.List;
+
+import com.jokaah.springprojects.tienda.model.Cliente;
 
 public interface ClientesDAO {
     public List<Cliente> findAll();

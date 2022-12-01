@@ -1,8 +1,16 @@
 package com.jokaah.springprojects.tienda.dao.impl;
 
-import com.jokaah.springprojects.tienda.dao.ProductosDAO;
-import com.jokaah.springprojects.tienda.dao.mappers.ProductoMapper;
-import com.jokaah.springprojects.tienda.model.Producto;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,16 +23,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.io.InputStream;
-import java.io.ByteArrayInputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
+import com.jokaah.springprojects.tienda.dao.ProductosDAO;
+import com.jokaah.springprojects.tienda.dao.mappers.ProductoMapper;
+import com.jokaah.springprojects.tienda.model.Producto;
 
 @Repository
 public class ProductosDAOImpl extends JdbcDaoSupport implements ProductosDAO {
