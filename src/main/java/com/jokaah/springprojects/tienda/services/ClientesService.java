@@ -1,11 +1,13 @@
 package com.jokaah.springprojects.tienda.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.jokaah.springprojects.tienda.model.Cliente;
-import java.util.List;
 
 public interface ClientesService {
 
-    public List<Cliente> findAll();
+    public Page<Cliente> findAll(Pageable page);
 
     public Cliente findById(int codigo);
 

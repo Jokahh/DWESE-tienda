@@ -1,8 +1,8 @@
 package com.jokaah.springprojects.tienda.services.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jokaah.springprojects.tienda.dao.ClientesDAO;
@@ -16,8 +16,8 @@ public class ClientesServiceImpl implements ClientesService {
     ClientesDAO clientesDAO;
 
     @Override
-    public List<Cliente> findAll() {
-        return clientesDAO.findAll();
+    public Page<Cliente> findAll(Pageable page) {
+        return clientesDAO.findAll(page);
     }
 
     @Override

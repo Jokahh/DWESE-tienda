@@ -1,10 +1,11 @@
 package com.jokaah.springprojects.tienda.dao;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.jokaah.springprojects.tienda.model.Cliente;
 
 public interface ClientesDAO {
-    public List<Cliente> findAll();
+    public Page<Cliente> findAll(Pageable page);
 
     public Cliente findById(int codigo);
 

@@ -1,11 +1,14 @@
 package com.jokaah.springprojects.tienda.controllers;
 
-import com.jokaah.springprojects.tienda.model.Cliente;
-import com.jokaah.springprojects.tienda.services.ClientesService;
-
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,21 +17,48 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jokaah.springprojects.tienda.model.Cliente;
+import com.jokaah.springprojects.tienda.services.ClientesService;
+
 @Controller
 @RequestMapping("/clientes")
 public class ClienteController {
-
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
     @Autowired
     ClientesService clientesService;
 
+    @Value("${pagination.size}")
+    int sizePage;
+
     @GetMapping(value = "/list")
     public ModelAndView list(Model model) {
+        ModelAndView modelAndView = new ModelAndView("redirect:list/1/codigo/asc");
+        return modelAndView;
+    }
 
-        List<Cliente> clientes = clientesService.findAll();
+    @GetMapping(value = "/list/{numPage}/{fieldSort}/{directionSort}")
+    public ModelAndView listPage(Model model,
+            @PathVariable("numPage") Integer numPage,
+            @PathVariable("fieldSort") String fieldSort,
+            @PathVariable("directionSort") String directionSort) {
+
+        Pageable pageable = PageRequest.of(numPage - 1, sizePage,
+                directionSort.equals("asc") ? Sort.by(fieldSort).ascending() : Sort.by(fieldSort).descending());
+
+        Page<Cliente> page = clientesService.findAll(pageable);
+
+        List<Cliente> clientes = page.getContent();
 
         ModelAndView modelAndView = new ModelAndView("clientes/list");
         modelAndView.addObject("clientes", clientes);
-        modelAndView.addObject("title", "clientes");
+
+        modelAndView.addObject("numPage", numPage);
+        modelAndView.addObject("totalPages", page.getTotalPages());
+        modelAndView.addObject("totalElements", page.getTotalElements());
+
+        modelAndView.addObject("fieldSort", fieldSort);
+        modelAndView.addObject("directionSort", directionSort.equals("asc") ? "asc" : "desc");
+
         return modelAndView;
     }
 
@@ -51,32 +81,23 @@ public class ClienteController {
     }
 
     @PostMapping(path = { "/save" })
-    public ModelAndView save(Cliente cliente) {
-
-        /*
-         * int round = (int) (Math.random() * (100 + 5));
-         * cliente.setCodigo(round);
-         */
+    public ModelAndView save(Cliente cliente) throws IOException {
 
         clientesService.insert(cliente);
-        List<Cliente> clientes = clientesService.findAll();
 
-        ModelAndView modelAndView = new ModelAndView("clientes/list");
-        modelAndView.addObject("clientes", clientes);
+        ModelAndView modelAndView = new ModelAndView("redirect:edit/" + cliente.getCodigo());
+
         return modelAndView;
     }
 
     @PostMapping(path = { "/update" })
-    public ModelAndView update(Cliente cliente) {
+    public ModelAndView update(Cliente cliente)
+            throws IOException {
 
         clientesService.update(cliente);
-        List<Cliente> clientes = clientesService.findAll();
 
-        // int indexOf = clientes.indexOf(cliente);
-        // clientes.set(indexOf, cliente);
+        ModelAndView modelAndView = new ModelAndView("redirect:edit/" + cliente.getCodigo());
 
-        ModelAndView modelAndView = new ModelAndView("clientes/list");
-        modelAndView.addObject("clientes", clientes);
         return modelAndView;
     }
 
@@ -85,43 +106,9 @@ public class ClienteController {
             @PathVariable(name = "codigo", required = true) int codigo) {
 
         clientesService.delete(codigo);
-        List<Cliente> clientes = clientesService.findAll();
 
-        // clientes.remove(getCliente(codigo));
-        ModelAndView modelAndView = new ModelAndView("clientes/list");
-        modelAndView.addObject("clientes", clientes);
+        ModelAndView modelAndView = new ModelAndView("redirect:/clientes/list");
+
         return modelAndView;
     }
-
-    /*
-     * private Cliente getCliente(int codigo) {
-     * List<Cliente> clientes = clientesService.findAll();
-     * int indexOf = clientes.indexOf(new Cliente(codigo));
-     * 
-     * return clientes.get(indexOf);
-     * 
-     * }
-     * 
-     * 
-     * private List<Cliente> getClientes() {
-     * 
-     * Cliente p1 = new Cliente(1, "Paco", "Paquero", "111111111", "Calle Paco 1",
-     * "PacoPaquero1@gmail.com", false);
-     * Cliente p2 = new Cliente(2, "Maria", "Mariana", "222222222", "Calle Maria 2",
-     * "MariaMariana2@gmail.com", false);
-     * Cliente p3 = new Cliente(3, "Angel", "Angela", "333333333", "Calle Angel 3",
-     * "AngelAngela3@gmail.com", false);
-     * Cliente p4 = new Cliente(4, "Miguel", "Angel", "444444444", "Calle Miguel 4",
-     * "MiguelAngel4@gmail.com", false);
-     * 
-     * List<Cliente> listaClientes = new ArrayList<Cliente>();
-     * 
-     * listaClientes.add(p1);
-     * listaClientes.add(p2);
-     * listaClientes.add(p3);
-     * listaClientes.add(p4);
-     * 
-     * return listaClientes;
-     * }
-     */
 }
