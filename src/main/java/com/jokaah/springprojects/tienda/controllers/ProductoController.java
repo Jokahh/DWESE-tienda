@@ -132,7 +132,7 @@ public class ProductoController {
         productosService.delete(codigo);
         // List<Producto> productos = productosService.findAll();
 
-        ModelAndView modelAndView = new ModelAndView("productos/list");
+        ModelAndView modelAndView = new ModelAndView("redirect:/productos/list");
         // modelAndView.addObject("productos", productos);
         return modelAndView;
     }

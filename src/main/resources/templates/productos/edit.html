@@ -11,15 +11,15 @@
         <form class="needs-validation" style="width: 30%;" th:action="@{/productos/update}" method="post" enctype="multipart/form-data">
             <input type="hidden" id="codigo" name="codigo" th:value="${producto.codigo}">
             <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre</label>
+                <label for="nombre" class="form-label" th:text="#{producto.list.nombre}">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" th:value="${producto.nombre}">
             </div>
             <div class="mb-3">
-                <label for="descripcion" class="form-label">Descripción</label>
+                <label for="descripcion" class="form-label" th:text="#{producto.list.descripcion}">Descripción</label>
                 <input type="text" class="form-control" id="descripcion" name="descripcion" th:value="${producto.descripcion}">
             </div>
             <div class="mb-3">
-                <label for="precio" class="form-label">Precio</label>
+                <label for="precio" class="form-label" th:text="#{producto.list.precio}">Precio</label>
                 <input type="text" class="form-control" id="precio" name="precio" th:value="${producto.precio}">
             </div>
             <img src="" alt="" width="325em" th:src="'data:image/png;base64,' + ${producto.imageView}">
@@ -28,8 +28,8 @@
             </div>
             <div class="col-sm-12">
                 <div class="btn-group">
-                    <a class="btn btn-primary" th:href="@{/productos/list}" href="#" role="button">Cancelar</a>
-                    <button class="btn btn-primary" type="submit">Actualizar</button>
+                    <a class="btn btn-primary" th:href="@{/productos/list}" href="#" role="button" th:text="#{boton.cancelar}">Cancelar</a>
+                    <button class="btn btn-primary" type="submit" th:text="#{boton.actualizar}">Actualizar</button>
                 </div>
             </div>
         </form>

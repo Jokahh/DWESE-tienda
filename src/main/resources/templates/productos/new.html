@@ -11,16 +11,16 @@
         <form class="needs-validation" style="width: 30%;" th:action="@{/productos/save}" method="post" enctype="multipart/form-data">
             <input type="hidden" id="codigo" name="codigo" th:value="${producto.codigo}">
             <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre</label>
+                <label for="nombre" class="form-label" th:text="#{producto.list.nombre}">Nombre</label>
                 <input type="text" class="form-control" name="nombre" id="nombre" th:value="${producto.nombre}">
             </div>
             <div class="mb-3">
-                <label for="descripcion" class="form-label">Descripción</label>
+                <label for="descripcion" class="form-label" th:text="#{producto.list.descripcion}">Descripción</label>
                 <input type="text" class="form-control" name="descripcion" id="descripcion"
                     th:value="${producto.descripcion}">
             </div>
             <div class="mb-3">
-                <label for="precio" class="form-label">Precio</label>
+                <label for="precio" class="form-label" th:text="#{producto.list.precio}">Precio</label>
                 <input type="text" class="form-control" name="precio" id="precio" th:value="${producto.precio}">
             </div>
             <div class="form-group">
@@ -28,8 +28,8 @@
             </div>
             <div class="col-sm-12">
                 <div class="btn-group">
-                    <a class="btn btn-primary" th:href="@{/productos/list}" href="#" role="button">Cancelar</a>
-                    <button class="btn btn-primary" type="submit">Crear</button>
+                    <a class="btn btn-primary" th:href="@{/productos/list}" href="#" role="button" th:text="#{boton.cancelar}">Cancelar</a>
+                    <button class="btn btn-primary" type="submit" th:text="#{boton.crear}">Crear</button>
                 </div>
             </div>
         </form>
