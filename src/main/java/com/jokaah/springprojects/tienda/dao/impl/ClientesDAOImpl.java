@@ -49,8 +49,6 @@ public class ClientesDAOImpl extends JdbcDaoSupport implements ClientesDAO {
 
         final List<Cliente> clientes = getJdbcTemplate().query(query, new ClienteMapper());
 
-        
-
         return new PageImpl<Cliente>(clientes, page, total);
 
     }
